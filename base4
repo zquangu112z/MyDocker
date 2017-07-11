@@ -1,0 +1,30 @@
+FROM ubuntubase3:16.04
+
+ARG THEANO_VERSION=rel-0.8.2
+ARG TENSORFLOW_VERSION=latest
+ARG TENSORFLOW_ARCH=cpu
+ARG KERAS_VERSION=1.2.0
+ARG LASAGNE_VERSION=v0.1
+ARG TORCH_VERSION=latest
+ARG CAFFE_VERSION=master
+
+# Install TensorFlow
+RUN pip3 --no-cache-dir install tensorflow 
+
+
+# Install Keras
+RUN pip3 --no-cache-dir install keras
+
+
+
+# Set up notebook config
+COPY jupyter_notebook_config.py /root/.jupyter/
+
+# Jupyter has issues with being run directly: https://github.com/ipython/ipython/issues/7062
+COPY run_jupyter.sh /root/
+
+# Expose Ports for TensorBoard (6006), Ipython (8888)
+EXPOSE 6006 8888
+
+WORKDIR "/root"
+CMD ["/bin/bash"]

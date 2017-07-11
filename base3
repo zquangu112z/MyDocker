@@ -1,0 +1,18 @@
+FROM ubuntubase2:16.04
+
+# Install other useful Python packages using pip
+RUN pip3 --no-cache-dir install --upgrade ipython && \
+	pip3 --no-cache-dir install \
+		Cython \
+		jupyter \
+		path.py \
+		Pillow \
+		pygments \
+		six \
+		sphinx \
+		wheel \
+		zmq
+
+#
+WORKDIR "/root"
+CMD ["/bin/bash"]
